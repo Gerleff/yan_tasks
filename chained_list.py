@@ -10,8 +10,26 @@ class ChainedElem:
         self.value = value
         self.next_elem = next_elem
 
+    def __str__(self):
+        return f'{self.value}, next - {self.next_elem.value}'
+
+    def __call__(self):
+        print(self)
+
 
 d = ChainedElem('D')
 c = ChainedElem('C', next_elem=d)
 b = ChainedElem('B', next_elem=c)
 a = ChainedElem('A', next_elem=b)
+
+
+
+def create_chained_list(*args):
+    chained = None
+    for elem in args[::-1]:
+        _next = chained
+        chained = ChainedElem(elem, _next)
+    return chained
+
+example = create_chained_list('A', 'B', 'C')
+example()
