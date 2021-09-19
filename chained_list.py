@@ -4,7 +4,7 @@ You need to write down a function which receives the first element of chained li
 Function should reverse it and return new first element of chained list. """
 
 
-class ChainedElem(list):  # TODO Create child class that has __str__ method which is recursive. That class must be created
+class ChainedElem:
     # from parent.
     """Single element of chained list. If it's the last element next_elem is None."""
     def __init__(self, value, next_elem=None):
@@ -20,24 +20,18 @@ class ChainedElem(list):  # TODO Create child class that has __str__ method whic
     def __call__(self):
         print(self)
 
+    def __add__(self, other):
+        if isinstance(other, ChainedElem):
+            raise ValueError('You cannot add ChainedElem as value of new chained elem!')
+        return ChainedElem(value=other, next_elem=self)
 
-    def __add__(self, x):
-        self.insert(0, x)
-        print(self[0])
-
-
-
-class ChildChainedElem(ChainedElem):
-
-    def __init__(self, value, next_elem=None):
-        self.value = value
-        self.next_elem = next_elem
-
-    def __str__(self):
-        print(f'value = {self.value}, next elem = {self.next_elem}.')
-
-    # TODO make __add__ method that adds new element in chained list in front of first and returns new first element
-    # TODO make __len__ method that returns count of elements of chained list
+    def __len__(self):
+        a, count = self, 0
+        while a is not None:
+            print(a)
+            a = a.next_elem
+            count += 1
+        return count
 
 
 def create_chained_list(*args):
@@ -64,6 +58,8 @@ def reverse_chained_list(first: ChainedElem) -> ChainedElem:
         right = elem
 
 
-reverse_chained_list(example)()
+# example = reverse_chained_list(example)
 
-example.__add__('E')
+_new = example + 1 + 2 + 3
+# _new()
+print(len(_new))
