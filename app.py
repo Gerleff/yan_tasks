@@ -4,7 +4,6 @@ import random
 import httpx
 
 from fastapi import FastAPI
-from httpx import Response
 from starlette.responses import FileResponse
 
 app = FastAPI()
@@ -29,8 +28,8 @@ async def root():
 async def random_var():
     random_variant = random.randint(FIRST_VAR, LAST_VAR + 1)
     async with httpx.AsyncClient() as client:
-        response: Response = await client.get(f"https://inf-oge.sdamgia.ru/test?id={random_variant}"
-                                              f"&print=true&udiff=1&pdf=h&num=true")
+        response: httpx.Response = await client.get(f"https://inf-oge.sdamgia.ru/test?id={random_variant}"
+                                                    f"&print=true&udiff=1&pdf=h&num=true")
 
     path_to_file = f"{FOLDER_FOR_VARIANTS}/{random_variant}.pdf"
     with open(path_to_file, "wb") as file:
