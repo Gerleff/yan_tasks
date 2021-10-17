@@ -1,6 +1,5 @@
 import os
 import random
-
 import httpx
 
 from fastapi import FastAPI
@@ -27,11 +26,13 @@ async def root():
 @app.get("/get-random-var")
 async def random_var():
     random_variant = random.randint(FIRST_VAR, LAST_VAR + 1)
-    async with httpx.AsyncClient() as client:
-        response: httpx.Response = await client.get(f"https://inf-oge.sdamgia.ru/test?id={random_variant}"
-                                                    f"&print=true&udiff=1&pdf=h&num=true")
-
     path_to_file = f"{FOLDER_FOR_VARIANTS}/{random_variant}.pdf"
-    with open(path_to_file, "wb") as file:
-        file.write(response.read())
+
+    if True:
+        async with httpx.AsyncClient() as client:
+            response: httpx.Response = await client.get(f"https://inf-oge.sdamgia.ru/test?id={random_variant}"
+                                                        f"&print=true&udiff=1&pdf=h&num=true")
+        with open(path_to_file, "wb") as file:
+            file.write(response.read())
+
     return FileResponse(path_to_file)
